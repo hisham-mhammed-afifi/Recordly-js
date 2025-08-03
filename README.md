@@ -32,29 +32,6 @@ A high-performance, production-ready screen and webcam recorder built with vanil
 - No server required - pure client-side processing
 - Optional post-save file opening
 
-## Quick Start
-
-1. **Serve the files** (required due to CORS restrictions):
-
-   ```bash
-   # Python
-   python -m http.server 8000
-
-   # Node.js
-   npx serve .
-
-   # Or any static file server
-   ```
-
-2. **Open** `http://localhost:8000` in Chrome/Edge
-
-3. **Start Recording**:
-   - Select recording mode
-   - Choose quality settings
-   - Click "Start" and grant permissions
-   - Record, pause/resume as needed
-   - Click "Stop" to save
-
 ## Browser Support
 
 ### Primary (Full Support)
@@ -72,7 +49,7 @@ A high-performance, production-ready screen and webcam recorder built with vanil
 
 ### Core Components
 
-#### `app.js` - Application Controller
+#### `script.js` - Application Controller
 
 - UI state management
 - Event handling and keyboard shortcuts
