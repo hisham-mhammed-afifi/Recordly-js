@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+
+    <title>Recordly - Screen & Webcam Recorder</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="header">
+        <h1>Recordly</h1>
+        <div class="status-indicator" id="statusIndicator">
+          <span class="status-dot" id="statusDot"></span>
+          <span class="status-text" id="statusText">Ready</span>
+        </div>
+      </header>
+
+      <main class="main">
+        <div class="controls-panel">
+          <div class="control-group">
+            <label for="modeSelect">Recording Mode</label>
+            <select id="modeSelect" aria-label="Recording mode">
+              <option value="screen">Screen Only</option>
+              <option value="webcam">Webcam Only</option>
+              <option value="combined">Screen + Webcam</option>
+            </select>
+          </div>
+
+          <div class="control-group">
+            <label for="qualitySelect">Quality</label>
+            <select id="qualitySelect" aria-label="Video quality">
+              <option value="1080p">1080p (1920x1080)</option>
+              <option value="720p" selected>720p (1280x720)</option>
+              <option value="480p">480p (854x480)</option>
+            </select>
+          </div>
+
+          <div class="control-group">
+            <label for="bitrateSelect">Video Bitrate</label>
+            <select id="bitrateSelect" aria-label="Video bitrate">
+              <option value="8000000">8 Mbps</option>
+              <option value="5000000" selected>5 Mbps</option>
+              <option value="3000000">3 Mbps</option>
+              <option value="2000000">2 Mbps</option>
+              <option value="1000000">1 Mbps</option>
+            </select>
+          </div>
+
+          <div class="control-group" id="deviceGroup" style="display: none">
+            <label for="deviceSelect">Camera</label>
+            <select id="deviceSelect" aria-label="Camera device">
+              <option value="">Default Camera</option>
+            </select>
+          </div>
+
+          <div class="audio-controls">
+            <div class="audio-toggle">
+              <input type="checkbox" id="micToggle" checked />
+              <label for="micToggle">Microphone</label>
+              <div class="level-meter">
+                <div class="level-bar" id="micLevel"></div>
+              </div>
+            </div>
+            <div
+              class="audio-toggle"
+              id="systemAudioGroup"
+              style="display: none"
+            >
+              <input type="checkbox" id="systemAudioToggle" checked />
+              <label for="systemAudioToggle">System Audio</label>
+            </div>
+          </div>
+
+          <div class="recording-controls">
+            <button
+              id="startBtn"
+              class="btn btn-primary"
+              aria-label="Start recording"
+            >
+              <span class="btn-icon">●</span>
+              Start
+            </button>
+            <button
+              id="pauseBtn"
+              class="btn btn-secondary"
+              disabled
+              aria-label="Pause recording"
+            >
+              <span class="btn-icon">⏸</span>
+              Pause
+            </button>
+            <button
+              id="resumeBtn"
+              class="btn btn-secondary"
+              disabled
+              style="display: none"
+              aria-label="Resume recording"
+            >
+              <span class="btn-icon">▶</span>
+              Resume
+            </button>
+            <button
+              id="stopBtn"
+              class="btn btn-danger"
+              disabled
+              aria-label="Stop recording"
+            >
+              <span class="btn-icon">⏹</span>
+              Stop
+            </button>
+          </div>
+        </div>
+
+        <div class="preview-panel">
+          <div class="preview-container" id="previewContainer">
+            <video id="previewVideo" autoplay muted playsinline></video>
+            <div class="pip-container" id="pipContainer" style="display: none">
+              <video id="pipVideo" autoplay muted playsinline></video>
+              <div class="pip-handle" id="pipHandle"></div>
+            </div>
+            <div class="preview-overlay" id="previewOverlay">
+              <div class="preview-message">
+                Select recording mode and click Start
+              </div>
+            </div>
+          </div>
+
+          <div class="info-panel">
+            <div class="info-item">
+              <span class="info-label">Duration:</span>
+              <span class="info-value" id="durationDisplay">00:00</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">File Size:</span>
+              <span class="info-value" id="fileSizeDisplay">0 MB</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Dropped Frames:</span>
+              <span class="info-value" id="droppedFramesDisplay">0</span>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <div
+        class="error-message"
+        id="errorMessage"
+        style="display: none"
+        role="alert"
+      >
+        <div class="error-content">
+          <span class="error-text" id="errorText"></span>
+          <button class="error-close" id="errorClose" aria-label="Close error">
+            &times;
+          </button>
+        </div>
+      </div>
+
+      <div
+        class="save-dialog"
+        id="saveDialog"
+        style="display: none"
+        role="dialog"
+        aria-labelledby="saveDialogTitle"
+      >
+        <div class="save-dialog-content">
+          <h3 id="saveDialogTitle">Save Recording</h3>
+          <div class="save-form">
+            <label for="filenameInput">Filename:</label>
+            <input type="text" id="filenameInput" value="" />
+            <div class="save-options">
+              <label>
+                <input type="checkbox" id="openAfterSave" />
+                Open after saving
+              </label>
+            </div>
+            <div class="save-actions">
+              <button class="btn btn-primary" id="confirmSave">Save</button>
+              <button class="btn btn-secondary" id="cancelSave">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="script.js"></script>
+  </body>
+</html>
