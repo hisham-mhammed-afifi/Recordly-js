@@ -104,7 +104,7 @@ export class Recorder {
           .addEventListener("ended", () => {
             console.log("Screen sharing stopped by user");
             this.emit("error", new Error("Screen sharing was stopped"));
-            this.cleanup();
+            this.stop();
           });
       }
 
