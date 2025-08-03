@@ -246,6 +246,21 @@ export class Recorder {
   }
 
   /**
+   * Terminate worker (if any) and fall back to Canvas compositor.
+   */
+  async fallbackToCanvas(config) {
+    try {
+      if (this.worker) {
+        this.worker.terminate();
+        this.worker = null;
+      }
+    } catch (_) {
+      /* no-op */
+    }
+    await this.createCombinedStreamCanvas(config);
+  }
+
+  /**
    * Create combined stream using Canvas (fallback path)
    */
   async createCombinedStreamCanvas(config) {
@@ -281,7 +296,9 @@ export class Recorder {
 
     // Set up compositing loop
     const drawFrame = () => {
-      if (!this.isRecording) return;
+      // Keep preview alive regardless of MediaRecorder state
+      if (!this.streams.screen && !this.streams.webcam) return; // nothing to draw
+      // if (!this.isRecording) return;
 
       // Clear canvas
       ctx.fillStyle = "#000";
